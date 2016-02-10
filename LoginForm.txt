@@ -38,18 +38,16 @@ namespace LoginPrj {
 		 		label1.Text = "";                 
 		 	}             
 		}             
-		 dt.Clear(); 
+		dt.Clear(); 
 	}
 
-        private void timer1_Tick(object sender, EventArgs e){             
-
+        private void timer1_Tick(object sender, EventArgs e){   
 		if(panel1.Height != 100){                 
 			panel1.Height +=5;                 
 			if(panel1.Height == 100)
 	                     timer1.Stop();                 
-         	}  
-       
-	 }
+         	} 
+	}
          
 	private void timer2_Tick(object sender, EventArgs e){
              	if (panel1.Height != 0){
