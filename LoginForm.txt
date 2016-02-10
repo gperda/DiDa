@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel; 
+using System.Data; using System.Drawing; 
+using System.Linq; using System.Text; 
+using System.Windows.Forms; using System.Data.OleDb; 
+
+namespace LoginPrj {
+     public partial class TestForm : Form{
+
+	OleDbConnection cn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;
+	 		      Data Source=C:\Users\Documents\DataBase1.accdb");
+	OleDbDataAdapter da;
+	DataTable dt = new DataTable();
+	 
+	public TestForm(){             
+		InitializeComponent();
+	}  
+	 
+	private void button1_Click(object sender, EventArgs e){             
+		 da = new OleDbDataAdapter("select * from MyTab where Email='"+textBox1.Text+"' and Password='"+textBox2.Text+"'",cn);
+		 da.Fill(dt);
+		 
+		 if (dt.Rows.Count <= 0){ 
+			if(panel1.Height == 0){                     
+				 label1.Text = "Email Or Passwor are Invalide Please try again";                     
+				 timer1.Start();                 
+			}else if (panel1.Height == 100){                     
+				 timer2.Start();                     
+				 label1.Text = "";                 
+			}
+		}else if (dt.Rows.Count > 0){
+			if (panel1.Height == 0){ 
+				label1.Text = "Login Success";                     
+		 		timer1.Start();                 
+		 	}else if (panel1.Height == 100){                     
+		 		timer2.Start();
+		 		label1.Text = "";                 
+		 	}             
+		}             
+		 dt.Clear(); 
+	}
+
+        private void timer1_Tick(object sender, EventArgs e){             
+
+		if(panel1.Height != 100){                 
+			panel1.Height +=5;                 
+			if(panel1.Height == 100)
+	                     timer1.Stop();                 
+         	}  
+       
+	 }
+         
+	private void timer2_Tick(object sender, EventArgs e){
+             	if (panel1.Height != 0){
+                 	panel1.Height -= 5;                 
+			if (panel1.Height == 0)
+				timer2.Stop();               
+		}         
+	}
+        
+	private void button2_Click(object sender, EventArgs e){
+             timer2.Start();         
+	}     
+    } 
+}
